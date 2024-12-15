@@ -48,7 +48,6 @@ int main(int argc, char** argv) {
     int* re = new int[2];
     int* nominals = nullptr;
     if (rank == 0) {
-        start = MPI_Wtime();
         cout << "Enter the amount you want to dial: "; cin >> sum;
         cout << "Enter the number of coin denominations: "; cin >> count_nominals;
         nominals = new int[count_nominals];
@@ -77,6 +76,8 @@ int main(int argc, char** argv) {
     long long endCombination = (rank == size - 1) ? totalCombinations : startCombination + cS;
     long long localCount = 0;
     long long globalCount = 0;
+    if (rank == 0)
+        start = MPI_Wtime();
     try
     {
         getResult(localCount, nominals, structureNominals, count_nominals, sum, startCombination, endCombination, rank);
